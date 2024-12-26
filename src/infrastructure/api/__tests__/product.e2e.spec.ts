@@ -28,4 +28,22 @@ describe("E2E test for product", () => {
     });
     expect(response.status).toBe(500);
   });
+
+  it("should list all product", async () => {
+    const response = await request(app).post("/product").send({
+      type: "a",
+      name: "Product",
+      price: 100,
+    });
+    expect(response.status).toBe(200);
+    const response2 = await request(app).post("/product").send({
+      type: "b",
+      name: "Product 2",
+      price: 200,
+    });
+    expect(response2.status).toBe(200);
+
+    const response3 = await request(app).get("/product");
+    expect(response3.status).toBe(200);
+  });
 });
