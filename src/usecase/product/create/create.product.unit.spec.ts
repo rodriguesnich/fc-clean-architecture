@@ -66,4 +66,18 @@ describe("Unit test create product use case", () => {
       "Product type not supported"
     );
   });
+  
+  it("should thrown an error when price is less than 0 and name is missing", async () => {
+    const productRepository = MockRepository();
+    const productCreateUseCase = new CreateProductUseCase(productRepository);
+
+    let localInput = { ...input };
+    localInput.price = -1;
+    localInput.name = "";
+
+    await expect(productCreateUseCase.execute(localInput)).rejects.toThrow(
+      "Name is required"
+    );
+  });
+
 });
